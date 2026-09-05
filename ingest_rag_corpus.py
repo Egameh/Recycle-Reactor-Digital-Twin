@@ -1,27 +1,3 @@
-"""
-RAG Corpus Ingestion for the TEP Digital Twin Agent
-
-Extracts text from PDF/Markdown source documents, chunks it, embeds each
-chunk with Gemini's embedding model, and saves the result for retrieval.
-
-Requires:
-    pip install google-genai pypdf
-    export GOOGLE_API_KEY=your_key_here
-
-Usage:
-    python ingest_rag_corpus.py /path/to/data/folder file1.pdf file2.pdf file3.md
-
-Example:
-    python ingest_rag_corpus.py "/Users/egmh/Downloads/Tennesy Folder/TEP_data" \\
-        "/Users/egmh/Downloads/TEP_pdf.pdf" \\
-        "/Users/egmh/Downloads/TEP_pdf2.pdf" \\
-        "/Users/egmh/Downloads/tep_plant_overview.md"
-
-Output (saved into the data folder):
-    rag_embeddings.npy   -- one embedding vector per chunk
-    rag_metadata.json    -- chunk text + source + chunk index, same order as embeddings
-"""
-
 import json
 import os
 import sys
