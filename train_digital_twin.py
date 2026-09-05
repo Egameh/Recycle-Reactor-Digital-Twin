@@ -1,19 +1,3 @@
-"""
-Digital Twin: stacked ensemble regressor predicting Reactor Pressure
-from all other TEP process variables, trained on normal operation only.
-
-Architecture: Random Forest + Gradient Boosting (base models) ->
-Linear Regression (meta-learner), via sklearn's StackingRegressor
-(which internally uses cross-validated base predictions to avoid leakage).
-
-Reads tep_train_renamed.parquet / tep_test_renamed.parquet.
-Saves the trained twin (joblib) and a residuals file for later use
-by the fault classifier / agent layer.
-
-Usage:
-    python train_digital_twin.py /path/to/data/folder
-"""
-
 import sys
 from pathlib import Path
 
