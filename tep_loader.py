@@ -1,17 +1,3 @@
-"""
-Tennessee Eastman Process (TEP) data loader.
-
-Merges all training files (d00.dat ... d21.dat) into one labeled dataframe,
-and all testing files (d00_te.dat ... d21_te.dat) into another.
-
-Expects the classic whitespace-delimited .dat format, no header row,
-52 process variable columns per row. If your files use a different
-delimiter or have a header, tweak `read_one_file` below.
-
-Usage:
-    python tep_loader.py /path/to/data/folder
-"""
-
 import sys
 import re
 from pathlib import Path
