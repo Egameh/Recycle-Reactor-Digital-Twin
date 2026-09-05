@@ -1,0 +1,38 @@
+# Raw and processed data -- not yours to redistribute, and regeneratable
+# by running tep_loader.py / rename_tep_columns.py against your own copy
+# of the dataset.
+TEP_data/
+*.dat
+*.parquet
+
+# Source documents used for RAG -- copyrighted/not yours to redistribute.
+# README should link to where to download these instead.
+*.pdf
+
+# RAG embeddings and trained models -- large binary files, regeneratable
+# by re-running ingest_rag_corpus.py / the training scripts.
+*.npy
+rag_embeddings.npy
+rag_metadata.json
+*.joblib
+
+# Generated chart outputs
+plots/
+
+# Secrets -- never commit API keys
+.env
+*.env
+
+# Python housekeeping
+__pycache__/
+*.pyc
+*.pyo
+.Python
+venv/
+env/
+*.egg-info/
+
+# OS/editor cruft
+.DS_Store
+.vscode/
+.idea/
