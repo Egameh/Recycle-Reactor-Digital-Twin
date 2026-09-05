@@ -1,15 +1,3 @@
-"""
-Renames TEP merged parquet columns from generic xmeas_*/xmv_* labels
-to real plant variable names, per Downs & Vogel (1993) / teprob.f documentation.
-
-Reads tep_train_merged.parquet and tep_test_merged.parquet,
-writes tep_train_renamed.parquet and tep_test_renamed.parquet
-in the same folder. Originals are left untouched.
-
-Usage:
-    python rename_tep_columns.py /path/to/data/folder
-"""
-
 import sys
 from pathlib import Path
 
