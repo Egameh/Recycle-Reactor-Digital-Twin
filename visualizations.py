@@ -1,12 +1,3 @@
-"""
-Reusable visualization functions for the TEP digital twin.
-
-These return matplotlib Figure objects rather than saving files directly,
-so they can be reused as-is inside a future Streamlit app (st.pyplot(fig))
-without any rewriting. The agent tool wrappers in agent.py call these and
-handle saving to disk for their own purposes.
-"""
-
 import matplotlib
 matplotlib.use("Agg")  # non-interactive backend, safe for scripts without a display
 import matplotlib.pyplot as plt
