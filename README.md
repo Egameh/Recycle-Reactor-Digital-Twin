@@ -1,16 +1,29 @@
 # Recycle-Reactor Digital Twin
 
+<<<<<<< HEAD
 A digital twin + LLM agent for the Tennessee Eastman Process (TEP) benchmark —
 combining a statistical process model, SHAP-based root-cause analysis, and a
 tool-calling Gemini agent grounded in real process documentation (RAG).
 
 Built as a portfolio project bridging industrial process engineering and
+=======
+A digital twin + LLM agent for the Tennessee Eastman Process (TEP) benchmark.
+Combining a statistical process model, SHAP-based root-cause analysis, and a
+tool-calling Gemini agent grounded in real process documentation (RAG).
+
+Built as a DEMO project bridging industrial process engineering and
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
 applied AI/ML: reliability-focused digital twin deployment, explainability,
 and agentic reasoning over a real (simulated) chemical plant.
 
 ## What it does
 
+<<<<<<< HEAD
 Ask the agent about a plant fault, and it:
+=======
+As a Process engineer, you can ask the agent about a plant fault, and it:
+
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
 1. Runs a trained digital twin to check whether the fault causes a
    meaningful deviation in reactor pressure
 2. If it does, runs a SHAP analysis to identify which process variables are
@@ -19,8 +32,12 @@ Ask the agent about a plant fault, and it:
 4. Can answer conceptual questions about the plant itself, grounded in
    real process engineering documentation, via retrieval-augmented generation
 
+<<<<<<< HEAD
 All synthesized into plain, direct engineer-style commentary — not a
 API dump of numbers.
+=======
+All synthesized into plain, direct engineer-style commentary
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
 
 ## Architecture
 
@@ -48,7 +65,11 @@ are the anomaly signal.
 **Root-cause explainer**: rather than a fixed fault classifier, SHAP values
 compare each fault's variable contributions against the normal-operation
 baseline. This generalizes to explaining *why* a deviation is happening
+<<<<<<< HEAD
 without needing the fault to match a predefined category — closer to how
+=======
+without needing the fault to match a predefined category. Closer to how
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
 a process engineer actually reasons about an anomaly.
 
 **RAG layer**: process engineering documentation (a Texas Tech thesis on
@@ -67,7 +88,11 @@ this disturbance almost completely before it reaches reactor pressure.
 **Fault 6 (A Feed Loss):**
 Mean residual: **+260.94** — severe. SHAP correctly surfaces
 `product_sep_pressure`, `stripper_pressure`, and feed-A-related variables
+<<<<<<< HEAD
 as the top contributors — without ever being told what fault 6 actually is.
+=======
+as the top contributors, without ever being told what fault 6 actually is.
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
 
 This contrast is the core validation of the approach: subtle,
 well-compensated faults and severe, poorly-compensated faults produce
@@ -148,5 +173,10 @@ python agent.py /path/to/TEP_data
 - Yapur, S.F. (2022). *Advantages of OKID-ERA Identification in Control
   Systems. An Application to the Tennessee Eastman Plant.* arXiv:2210.08538.
 
+<<<<<<< HEAD
 Raw dataset files and source PDFs are not included in this repository —
 see Setup above for where to obtain them.
+=======
+Raw dataset files and source PDFs are not included in this repository.
+See Setup above for where to obtain them.
+>>>>>>> cbe42570192153c44b2fc77b74d2d76c689c382b
