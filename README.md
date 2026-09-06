@@ -17,12 +17,20 @@ All of this is synthesized into plain, direct engineer-style commentary, not a r
 ## Architecture
 
 ```
-                  Gemini Agent
-      (decides which tools a question needs)
-
-      Digital Twin      SHAP Root-Cause     Visualization Tools     RAG Layer
-      (XGBoost          Explainer           (matplotlib)            (retrieval over
-      regressor)                                                    process docs)
+                    +-------------------+
+                    |   Gemini Agent    |
+                    +-------------------+
+                              |
+                (decides which tools a question needs)
+                              |
+        +---------------+----+----+---------------+
+        |               |         |               |
+   +---------+   +-------------+ +------------+ +---------+
+   | Digital |   | SHAP Root-  | | Visualiz.  | |   RAG   |
+   |  Twin   |   | Cause       | | Tools      | |  Layer  |
+   |(XGBoost)|-->| Explainer   | |(matplotlib)| |(process |
+   |         |   |             | |            | | docs)   |
+   +---------+   +-------------+ +------------+ +---------+
 ```
 
 **Digital twin**: an XGBoost regressor trained on normal-operation data only, predicting reactor pressure from the plant's other 51 process variables. Deviations between actual and predicted pressure (residuals) are the anomaly signal.
