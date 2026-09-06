@@ -1,12 +1,3 @@
-"""
-Reusable visualization functions for the TEP digital twin.
-
-These return matplotlib Figure objects rather than saving files directly,
-so they can be reused as-is inside a future Streamlit app (st.pyplot(fig))
-without any rewriting. The agent tool wrappers in agent.py call these and
-handle saving to disk for their own purposes.
-"""
-
 import matplotlib
 matplotlib.use("Agg")  # non-interactive backend, safe for scripts without a display
 import matplotlib.pyplot as plt
@@ -85,5 +76,121 @@ def get_shap_contributions_figure(shift_series: pd.Series, fault_number: int,
     ax.set_xlabel("SHAP contribution shift vs. normal baseline")
     ax.set_title(f"Fault {fault_number}: Top {top_n} Root-Cause Variables")
     ax.grid(alpha=0.3, axis="x")
+    fig.tight_layout()
+    return fig
+
+
+def get_pid_convergence_figure(pressure_history: list, valve_history: list,
+                                setpoint: float) -> plt.Figure:
+    """
+    Two-panel chart showing a PID control loop converging: predicted reactor
+    pressure approaching the setpoint over iterations (top), and the
+    manipulated valve position driving that convergence (bottom).
+
+    Args:
+        pressure_history: twin-predicted pressure at each iteration.
+        valve_history: manipulated variable (valve %) at each iteration.
+        setpoint: target pressure value.
+
+    Returns:
+        A matplotlib Figure.
+    """
+    iterations = np.arange(len(pressure_history))
+
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 7), sharex=True)
+
+    ax1.plot(iterations, pressure_history, color="tab:blue", linewidth=1.5, label="Twin-predicted pressure")
+    ax1.axhline(setpoint, color="black", linestyle="--", linewidth=1.2, label="Setpoint")
+    ax1.set_ylabel("Reactor Pressure")
+    ax1.set_title("PID Control Loop: Pressure Convergence")
+    ax1.legend()
+    ax1.grid(alpha=0.3)
+
+    ax2.plot(iterations, valve_history, color="tab:orange", linewidth=1.5)
+    ax2.set_xlabel("Iteration")
+    ax2.set_ylabel("A Feed Flow Valve (%)")
+    ax2.set_title("Manipulated Variable")
+    ax2.grid(alpha=0.3)
+
+    fig.tight_layout()
+    return fig
+
+
+def get_cascade_pid_figure(pressure_history: list, inner_var_history: list,
+                            inner_setpoint_history: list, pressure_setpoint: float,
+                            inner_var_name: str) -> plt.Figure:
+    """
+    Two-panel chart for a cascade PID loop: outer loop (reactor pressure vs.
+    its setpoint) and inner loop (the intermediate variable vs. the moving
+    setpoint the outer loop is feeding it).
+
+    Args:
+        pressure_history: twin-predicted reactor pressure at each iteration.
+        inner_var_history: the intermediate variable's value at each iteration.
+        inner_setpoint_history: the moving setpoint the outer loop generated
+            for the intermediate variable, at each iteration.
+        pressure_setpoint: the outer loop's fixed target.
+        inner_var_name: display name of the intermediate variable.
+
+    Returns:
+        A matplotlib Figure.
+    """
+    iterations = np.arange(len(pressure_history))
+
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(9, 7), sharex=True)
+
+    ax1.plot(iterations, pressure_history, color="tab:blue", linewidth=1.5,
+             label="Twin-predicted reactor pressure")
+    ax1.axhline(pressure_setpoint, color="black", linestyle="--", linewidth=1.2,
+                label="Reactor pressure setpoint")
+    ax1.set_ylabel("Reactor Pressure")
+    ax1.set_title("Outer Loop: Reactor Pressure")
+    ax1.legend()
+    ax1.grid(alpha=0.3)
+
+    ax2.plot(iterations, inner_var_history, color="tab:orange", linewidth=1.5,
+             label=f"{inner_var_name} (actual)")
+    ax2.plot(iterations, inner_setpoint_history, color="tab:green", linestyle="--",
+             linewidth=1.2, label=f"{inner_var_name} (setpoint from outer loop)")
+    ax2.set_xlabel("Iteration")
+    ax2.set_ylabel(inner_var_name.replace("_", " ").title())
+    ax2.set_title("Inner Loop: Intermediate Variable Tracking")
+    ax2.legend()
+    ax2.grid(alpha=0.3)
+
+    fig.tight_layout()
+    return fig
+
+
+def get_strategy_comparison_figure(single_var_history: list, multi_var_history: list,
+                                    setpoint: float) -> plt.Figure:
+    """
+    Overlays two control strategies' predicted-pressure trajectories on one
+    chart: a single-variable PID (limited by that variable's local range)
+    vs. a joint multi-variable proportional restoration toward the
+    fault-free baseline.
+
+    Args:
+        single_var_history: predicted pressure at each iteration, single-variable strategy.
+        multi_var_history: predicted pressure at each iteration, multi-variable strategy.
+        setpoint: target reactor pressure.
+
+    Returns:
+        A matplotlib Figure.
+    """
+    iterations = np.arange(max(len(single_var_history), len(multi_var_history)))
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(np.arange(len(single_var_history)), single_var_history, color="tab:red",
+            linewidth=1.5, label="Single-variable PID (stripper pressure)")
+    ax.plot(np.arange(len(multi_var_history)), multi_var_history, color="tab:green",
+            linewidth=1.5, label="Multi-variable joint restoration")
+    ax.axhline(setpoint, color="black", linestyle="--", linewidth=1.2, label="Setpoint")
+
+    ax.set_xlabel("Iteration")
+    ax.set_ylabel("Reactor Pressure")
+    ax.set_title("Control Strategy Comparison: Single-Variable vs. Multi-Variable Correction")
+    ax.legend()
+    ax.grid(alpha=0.3)
     fig.tight_layout()
     return fig

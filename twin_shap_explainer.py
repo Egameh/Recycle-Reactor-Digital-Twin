@@ -1,21 +1,3 @@
-"""
-XGBoost Digital Twin + SHAP Root-Cause Explainer
-
-Trains an XGBoost regressor to predict Reactor Pressure from normal
-operation data (same target as the stacked ensemble twin), then uses
-SHAP to explain, for any given fault, which input variables are driving
-the twin's prediction away from what "healthy" looks like.
-
-This mirrors the Holcim approach: regression + SHAP for root-cause
-explanation, rather than a fixed fault-category classifier.
-
-Usage:
-    python twin_shap_explainer.py /path/to/data/folder [fault_number]
-
-If fault_number is omitted, defaults to fault 4 (Reactor Cooling Water
-Inlet Temperature Step) as a clear, well-documented example.
-"""
-
 import sys
 from pathlib import Path
 
