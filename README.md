@@ -2,7 +2,7 @@
 
 A digital twin and LLM agent for the Tennessee Eastman Process (TEP) benchmark, combining a statistical process model, SHAP-based root-cause analysis, and a tool-calling Gemini agent grounded in real process documentation (RAG).
 
-Built as a portfolio project bridging industrial process engineering and applied AI/ML: reliability-focused digital twin deployment, explainability, and agentic reasoning over a real (simulated) chemical plant.
+Built as a DEMO project bridging industrial process engineering and applied AI/ML: reliability-focused digital twin deployment, explainability, and agentic reasoning over a real (simulated) chemical plant.
 
 ## What it does
 
