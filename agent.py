@@ -1,29 +1,3 @@
-"""
-TEP Digital Twin Agent
-
-A Gemini-powered agent that acts as a process engineer, with tool access to:
-  - run_digital_twin(fault_number): predicted vs actual reactor pressure + residual
-  - explain_root_cause(fault_number): SHAP-based root cause variables vs normal baseline
-  - plot_pressure_trend(fault_number): chart of actual vs predicted pressure over time
-  - plot_shap_contributions(fault_number): bar chart of top root-cause variables
-  - retrieve_manual(query): RAG lookup over the process documentation corpus
-
-Requires:
-    pip install google-genai xgboost shap scikit-learn pandas joblib matplotlib numpy
-    export GOOGLE_API_KEY=your_key_here
-
-Expects, in the data folder passed as an argument:
-    tep_train_renamed.parquet, tep_test_renamed.parquet   (from earlier pipeline steps)
-    rag_embeddings.npy, rag_metadata.json                 (from ingest_rag_corpus.py)
-
-Usage:
-    python agent.py /path/to/data/folder
-Then chat with it, e.g.:
-    > Analyze fault 6 and tell me what's going on
-    > Show me a chart of fault 6's pressure trend
-    > What is the stripper for?
-"""
-
 import json
 import os
 import sys
@@ -390,7 +364,19 @@ def main():
         system_instruction=SYSTEM_INSTRUCTION,
     )
 
-    print("\nTEP Digital Twin Agent ready. Ask about any fault (0-21), or type 'quit'.\n")
+    print("\n" + "=" * 60)
+    print("Process Digital Twin Agent")
+    print("=" * 60)
+    print("\nI'm a process engineering assistant for a simulated chemical")
+    print("plant. I can:")
+    print("  - Analyze plant faults and explain what's driving them")
+    print("  - Generate charts of pressure trends and root-cause data")
+    print("  - Answer questions about how the plant works")
+    print("\nTry asking things like:")
+    print('  "Analyze fault 6"')
+    print('  "What does the stripper do?"')
+    print('  "Show me a chart of fault 6\'s pressure trend"')
+    print("\nType 'quit' to exit.\n")
 
     chat = GENAI_CLIENT.chats.create(model="gemini-3.1-pro-preview", config=config)
 
